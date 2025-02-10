@@ -15,7 +15,7 @@ print("Files in Directory:", os.listdir(os.path.dirname(dataset_path) or "."))
 
 
 # Add a banner image at the top of the page
-banner_image_path = "/mount/src/poc1/SIME.png"  # Update with the correct path to your PNG image
+banner_image_path = "SIME.png"  # Update with the correct path to your PNG image
 st.image(banner_image_path, use_container_width=True)
 
 # Load and clean data
