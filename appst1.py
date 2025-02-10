@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 
 # Add a banner image at the top of the page
 banner_image_path = "C:\\Users\\hxu\\SIME.png"  # Update with the correct path to your PNG image
-st.image(banner_image_path, use_column_width=True)
+st.image(banner_image_path, use_container_width =True)
 
 # Load and clean data
 dataset_path = "C:/Users/hxu/Downloads/Results11.csv"  # Update path to your dataset
