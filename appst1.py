@@ -10,11 +10,6 @@ from sklearn.ensemble import RandomForestRegressor  # Import Random Forest
 import xgboost as xgb
 import matplotlib.pyplot as plt
 
-import os
-print("Current Directory:", os.getcwd())
-print("Dataset Path:", dataset_path)
-print("File Exists:", os.path.exists(dataset_path))
-
 # Optional: List files in the directory
 print("Files in Directory:", os.listdir(os.path.dirname(dataset_path) or "."))
 
