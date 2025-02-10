@@ -24,7 +24,7 @@ banner_image_path = "/mount/src/poc1/SIME.png"  # Update with the correct path t
 st.image(banner_image_path, use_container_width=True)
 
 # Load and clean data
-dataset_path = "/mount/src/poc1/Result11.csv"
+dataset_path = "data/Result11.csv"
 data = pd.read_csv(dataset_path)
 
 # Drop irrelevant columns from the dataset
