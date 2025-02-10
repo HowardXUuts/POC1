@@ -10,9 +10,6 @@ from sklearn.ensemble import RandomForestRegressor  # Import Random Forest
 import xgboost as xgb
 import matplotlib.pyplot as plt
 
-# Optional: List files in the directory
-print("Files in Directory:", os.listdir(os.path.dirname(dataset_path) or "."))
-
 
 # Add a banner image at the top of the page
 banner_image_path = "SIME.png"  # Update with the correct path to your PNG image
