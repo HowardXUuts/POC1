@@ -15,7 +15,7 @@ banner_image_path = "data/SIME.png"  # Update with the correct path to your PNG 
 st.image(banner_image_path, use_container_width =True)
 
 # Load and clean data
-dataset_path = "C:/Users/hxu/Downloads/Results11.csv"  # Update path to your dataset
+dataset_path = "Results11.csv"  # Update path to your dataset
 data = pd.read_csv(dataset_path)
 
 # Drop irrelevant columns from the dataset
