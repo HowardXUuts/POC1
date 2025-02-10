@@ -10,17 +10,16 @@ from sklearn.ensemble import RandomForestRegressor  # Import Random Forest
 import xgboost as xgb
 import matplotlib.pyplot as plt
 
-
 # Add a banner image at the top of the page
-banner_image_path = "SIME.png"  # Update with the correct path to your PNG image
-st.image(banner_image_path, use_container_width=True)
+banner_image_path = "C:\\Users\\hxu\\SIME.png"  # Update with the correct path to your PNG image
+st.image(banner_image_path, use_column_width=True)
 
 # Load and clean data
-dataset_path = "Results11.csv"
+dataset_path = "C:/Users/hxu/Downloads/Results11.csv"  # Update path to your dataset
 data = pd.read_csv(dataset_path)
 
 # Drop irrelevant columns from the dataset
-for column in ['RegoNo', 'EstimatedDeliveryDate', 'StockNo', 'Stock','SaleslogType','OrderNo','Site2']:
+for column in ['RegoNo', 'EstimatedDeliveryDate', 'StockNo', 'Stock','SaleslogType','OrderNo','Site2','Department','No_Days','ModelID','DealNo','Site','CleanPhone']:
     if column in data.columns:
         data = data.drop(columns=[column])
 
@@ -93,7 +92,7 @@ else:
     best_model_name = "Random Forest"
 
 # Streamlit App UI
-st.title('SIME Used Car Price Prediction')
+st.title('SIME Used Car Price Estimation')
 
 # Create a two-column layout
 left_col, right_col = st.columns([2, 1])
@@ -158,7 +157,7 @@ st.write(f"Best Model: {best_model_name}")
 st.write(f"Best Model Test Score (R-squared): {best_r2 * 100:.2f}%")
 
 # Display a chart for the top 7 features with the updated colors
-st.sidebar.write("### Top 7 Features")
+st.sidebar.write("### Top 6 Features")
 feature_scores = selector.scores_[selector.get_support()]
 feature_scores_percentage = (feature_scores / feature_scores.sum()) * 100
 
@@ -181,3 +180,35 @@ st.sidebar.pyplot(plt)
 st.sidebar.write("### Collected Inputs")
 inputs_table = pd.DataFrame(list(inputs.items()), columns=["Feature", "Value"])
 st.sidebar.table(inputs_table)
+
+# Add a sidebar section for saving the predicted selling price
+st.sidebar.write("### Save Predicted Selling Price")
+
+if 'predicted_selling_price' in st.session_state:
+    # Display the current predicted selling price in the sidebar
+    st.sidebar.write(f"Predicted Selling Price: ${st.session_state.predicted_selling_price:.2f}")
+
+if st.sidebar.button("Save Predicted Price"):
+    # Decode categorical values back to their original form
+    decoded_inputs = {}
+    for feature, value in inputs.items():
+        if feature in label_encoders:  # Decode only if it's a categorical column
+            decoded_inputs[feature] = label_encoders[feature].inverse_transform([value])[0]
+        else:
+            decoded_inputs[feature] = value
+
+    # Add the predicted price to the inputs
+    decoded_inputs['Predicted Selling Price'] = f"${st.session_state.predicted_selling_price:.2f}"
+
+    # Convert to DataFrame (as a single row)
+    output_df = pd.DataFrame([decoded_inputs])
+
+    # Save to CSV
+    csv_data = output_df.to_csv(index=False)
+    st.sidebar.download_button(
+        label="Download Predicted Price CSV",
+        data=csv_data,
+        file_name="predicted_price.csv",
+        mime="text/csv",
+    )
+    st.sidebar.success("Predicted selling price saved!")
